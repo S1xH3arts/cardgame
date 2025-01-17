@@ -84,6 +84,19 @@
         body.dark-mode #description {
             color: #ecf0f1; /* Dark mode text color for description */
         }
+        #shuffleButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #shuffleButton:hover {
+            background-color: #e67e22;
+        }
     </style>
 </head>
 <body>
@@ -113,6 +126,7 @@
 
         <button onclick="resetCards()">Reset</button>
         <button onclick="startOver()">Start Over</button>
+        <button id="shuffleButton" onclick="shuffleCards()">Shuffle Cards</button>
     </div>
 
     <!-- Footer text above the logo -->
@@ -222,11 +236,8 @@
             const shuffledCards = Array.from(cards);
             shuffleArray(shuffledCards);
 
-            // Re-append the shuffled cards to the card area
-            const cardArea = document.getElementById('cardArea');
-            shuffledCards.forEach(card => {
-                cardArea.appendChild(card);
-            });
+            // Reattach shuffled cards to the DOM
+            shuffledCards.forEach(card => document.getElementById('cardArea').appendChild(card));
         }
     </script>
 </body>
