@@ -45,6 +45,14 @@
             transform: translateX(-50%);
             width: 550px; /* Adjust the size of the logo */
         }
+        #footerText {
+            position: fixed;
+            bottom: 70px; /* Space between the footer text and the logo */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -67,6 +75,9 @@
         <button onclick="resetCards()">Reset</button>
         <button onclick="startOver()">Start Over</button>
     </div>
+
+    <!-- Footer text above the logo -->
+    <div id="footerText">Made by SeriesPB</div>
 
     <!-- Logo at the bottom of the page -->
     <img id="logo" src="https://i.imgur.com/zwrvv9H.png" alt="Game Logo">
