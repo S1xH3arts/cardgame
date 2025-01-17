@@ -138,15 +138,18 @@
                 if (parts.length === 2 && !isNaN(parts[1])) {
                     const word = parts[0];
                     const frequency = parseInt(parts[1]);
-                    
-                    // Repeat the word based on frequency
+
+                    // Add the word to the pool based on its frequency
                     for (let i = 0; i < frequency; i++) {
                         allMessages.push(word);
                     }
                 }
             });
 
-            // Distribute the messages across the three cards
+            // Shuffle the array to randomize the order
+            allMessages = shuffleArray(allMessages);
+
+            // Distribute the shuffled messages across the three cards
             const messagesPerCard = Math.floor(allMessages.length / 3);
             for (let i = 0; i < 3; i++) {
                 customMessages[i] = allMessages.slice(i * messagesPerCard, (i + 1) * messagesPerCard);
@@ -155,6 +158,9 @@
             if (allMessages.length % 3 !== 0) {
                 customMessages[2] = customMessages[2].concat(allMessages.slice(3 * messagesPerCard));
             }
+
+            // Shuffle the cards positions
+            shuffleCards();
 
             // Hide the input box and show the cards
             document.getElementById('inputBox').classList.add('hidden');
@@ -199,6 +205,28 @@
             } else {
                 button.textContent = 'Switch to Dark Mode';
             }
+        }
+
+        // Shuffle the array to randomize the order of words
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // Shuffle the cards by reordering their HTML elements
+        function shuffleCards() {
+            const cards = document.querySelectorAll('.card');
+            const shuffledCards = Array.from(cards);
+            shuffleArray(shuffledCards);
+
+            // Re-append the shuffled cards to the card area
+            const cardArea = document.getElementById('cardArea');
+            shuffledCards.forEach(card => {
+                cardArea.appendChild(card);
+            });
         }
     </script>
 </body>
