@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Picker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            padding-bottom: 100px; /* Ensure space at the bottom for the logo */
+        }
+        .card {
+            display: inline-block;
+            width: 100px;
+            height: 150px;
+            margin: 10px;
+            background-color: #3498db;
+            color: white;
+            font-size: 24px;
+            line-height: 150px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.1);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .inputBox {
+            display: block;
+            margin-top: 30px;
+        }
+        .hidden {
+            display: none;
+        }
+        #logo {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 550px; /* Adjust the size of the logo */
+        }
+    </style>
+</head>
+<body>
+    <div id="inputBox" class="inputBox">
+        <h1>Enter Custom Messages for Cards (word number format)</h1>
+        <label for="cardMessages">Messages for Cards:</label>
+        <textarea id="cardMessages" rows="4" cols="50" placeholder="Enter messages with frequency, e.g., Winner 3, Truth 5, Dare 5"></textarea>
+        <br>
+        <button onclick="applyMessages()">Apply</button>
+    </div>
+
+    <div id="cardArea" class="hidden">
+        <h1>Pick a Card!</h1>
+        <div class="card" id="card1" onclick="revealCard(1)">1</div>
+        <div class="card" id="card2" onclick="revealCard(2)">2</div>
+        <div class="card" id="card3" onclick="revealCard(3)">3</div>
+
+        <div class="result" id="result"></div>
+
+        <button onclick="resetCards()">Reset</button>
+        <button onclick="startOver()">Start Over</button>
+    </div>
+
+    <!-- Logo at the bottom of the page -->
+    <img id="logo" src="https://i.imgur.com/zwrvv9H.png" alt="Game Logo">
+
+    <script>
+        let customMessages = [
+            [], // Messages for card 1
+            [], // Messages for card 2
+            []  // Messages for card 3
+        ];
+
+        function applyMessages() {
+            const inputMessages = document.getElementById('cardMessages').value.split(',').map(msg => msg.trim());
+            let allMessages = [];
+
+            // Parse each input and distribute based on frequency
+            inputMessages.forEach(input => {
+                const parts = input.split(' ').map(part => part.trim());
+                if (parts.length === 2 && !isNaN(parts[1])) {
+                    const word = parts[0];
+                    const frequency = parseInt(parts[1]);
+                    
+                    // Repeat the word based on frequency
+                    for (let i = 0; i < frequency; i++) {
+                        allMessages.push(word);
+                    }
+                }
+            });
+
+            // Distribute the messages across the three cards
+            const messagesPerCard = Math.floor(allMessages.length / 3);
+            for (let i = 0; i < 3; i++) {
+                customMessages[i] = allMessages.slice(i * messagesPerCard, (i + 1) * messagesPerCard);
+            }
+            // If there are leftover messages, assign them to the last card
+            if (allMessages.length % 3 !== 0) {
+                customMessages[2] = customMessages[2].concat(allMessages.slice(3 * messagesPerCard));
+            }
+
+            // Hide the input box and show the cards
+            document.getElementById('inputBox').classList.add('hidden');
+            document.getElementById('cardArea').classList.remove('hidden');
+        }
+
+        function revealCard(cardNumber) {
+            // Pick a random message from the selected card's message list
+            const randomMessage = customMessages[cardNumber - 1][Math.floor(Math.random() * customMessages[cardNumber - 1].length)];
+
+            // Hide the cards after selection
+            document.getElementById('card1').style.display = 'none';
+            document.getElementById('card2').style.display = 'none';
+            document.getElementById('card3').style.display = 'none';
+
+            // Display the result
+            document.getElementById('result').textContent = `You picked card ${cardNumber}: ${randomMessage}`;
+        }
+
+        function resetCards() {
+            // Show the cards again and reset the result
+            document.getElementById('card1').style.display = 'inline-block';
+            document.getElementById('card2').style.display = 'inline-block';
+            document.getElementById('card3').style.display = 'inline-block';
+            document.getElementById('result').textContent = '';
+        }
+
+        function startOver() {
+            // Hide the cards and show the input box again
+            document.getElementById('inputBox').classList.remove('hidden');
+            document.getElementById('cardArea').classList.add('hidden');
+            document.getElementById('cardMessages').value = '';
+        }
+    </script>
+</body>
+</html>
