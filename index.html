@@ -10,6 +10,13 @@
             text-align: center;
             margin-top: 50px;
             padding-bottom: 100px; /* Ensure space at the bottom for the logo */
+            background-color: #fff; /* Light mode background color */
+            color: #000; /* Light mode text color */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #2c3e50; /* Dark mode background color */
+            color: #ecf0f1; /* Dark mode text color */
         }
         .card {
             display: inline-block;
@@ -40,7 +47,7 @@
         }
         #logo {
             position: fixed;
-            bottom: 8px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             width: 550px; /* Adjust the size of the logo */
@@ -51,11 +58,29 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 16px;
-            color: #555;
+            color: #9d4eb5;
+        }
+        #darkModeButton {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 10;
+        }
+        #darkModeButton:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
+    <button id="darkModeButton" onclick="toggleDarkMode()">Switch to Dark Mode</button>
+
     <div id="inputBox" class="inputBox">
         <h1>Enter Custom Messages for Cards (word number format)</h1>
         <label for="cardMessages">Messages for Cards:</label>
@@ -148,6 +173,18 @@
             document.getElementById('inputBox').classList.remove('hidden');
             document.getElementById('cardArea').classList.add('hidden');
             document.getElementById('cardMessages').value = '';
+        }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            const button = document.getElementById('darkModeButton');
+
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                button.textContent = 'Switch to Light Mode';
+            } else {
+                button.textContent = 'Switch to Dark Mode';
+            }
         }
     </script>
 </body>
