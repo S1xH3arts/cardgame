@@ -76,13 +76,27 @@
         #darkModeButton:hover {
             background-color: #2980b9;
         }
+        #description {
+            font-size: 15px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        body.dark-mode #description {
+            color: #ecf0f1; /* Dark mode text color for description */
+        }
     </style>
 </head>
 <body>
     <button id="darkModeButton" onclick="toggleDarkMode()">Switch to Dark Mode</button>
 
     <div id="inputBox" class="inputBox">
-        <h1>Enter Custom Messages for Cards (word number format)</h1>
+        <div id="description">
+            <p><strong>How to Input Messages:</strong></p>
+            <p>Enter your messages in the format: <code>Word Number</code>, separated by commas. For example:</p>
+            <p><code>Winner 3, Dare 5, Truth 5</code></p>
+            <p>Where the <strong>word</strong> is the message, and the <strong>number</strong> indicates how many times that word will appear in the pool. The higher the number, the more likely the word will be selected. Once you’ve entered your messages, click the “Apply” button to start the game!</p>
+        </div>
+        <h1>Enter Custom Messages for Cards </h1>
         <label for="cardMessages">Messages for Cards:</label>
         <textarea id="cardMessages" rows="4" cols="50" placeholder="Enter messages with frequency, e.g., Winner 3, Truth 5, Dare 5"></textarea>
         <br>
