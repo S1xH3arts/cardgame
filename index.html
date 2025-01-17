@@ -66,7 +66,10 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin: 10px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
         }
         #darkModeButton:hover {
             background-color: #2980b9;
@@ -221,7 +224,6 @@
             }
         }
 
-        // Shuffle the array to randomize the order of words
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -230,7 +232,6 @@
             return array;
         }
 
-        // Shuffle the cards by reordering their HTML elements
         function shuffleCards() {
             const cardArea = document.getElementById('cardArea');
             const cards = Array.from(cardArea.getElementsByClassName('card'));
